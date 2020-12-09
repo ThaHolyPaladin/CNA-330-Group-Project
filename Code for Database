@@ -2,6 +2,27 @@
 # Collaberated with... #
 # Help from Justin Ellis & Zac Rubin #
 # CNA 330 Group Project #
-# 11/28/2020 ###
+# 11/28/2020 #
 
-Blah
+# This script pulls from the eia website and stores fuel prices into a database. It takes the information and compiles into a xcel sheet.
+# CNA 330 Group Project
+# Michael Horton, Mahorton@student.rtc.edu, 206-930-5206
+# With help from Zachary Rubin and Justin Ellis
+# collaborated with Eric, Dillion, Igor, Vlado, Mohammad,
+
+
+import mysql.connector
+import json
+import urllib.request
+import time
+
+# Connect to database
+# You may need to edit the connect function based on your local settings.
+def connect_to_sql():
+    conn = mysql.connector.connect(user='root', password='',
+                                  host='127.0.0.1',
+                                  database='jobhunter')
+    return conn
+
+if __name__ == '__main__':
+    main()
