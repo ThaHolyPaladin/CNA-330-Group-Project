@@ -31,12 +31,16 @@ db_name = 'sqlgroupproject' """
 # The url for the source web page
 html_source_url = "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EMD_EPD2D_PTE_R50_DPG&f=W"
 
+#Code for table
+tables = pandas.read_excel ('https://www.eia.gov/dnav/pet/hist_xls/EMD_EPD2D_PTE_R50_DPGw.xls', sheet_name='Data 1',
+                            header = 2, index_col='Date')
+
 # Connect to database
 # You may need to edit the connect function based on your local settings.
 def connect_to_sql():
     conn = mysql.connector.connect(user='root', password='',
                                   host='127.0.0.1',
-                                  database='jobhunter')
+                                  database='sqlgroupproject')
     return conn
 
 # Create the table structure
@@ -116,22 +120,20 @@ def add_or_delete_job(jobpage, cursor):
         else:
             print("New job is found: " + jobdetails["title"] + " from " + jobdetails["company"])
             add_new_job(cursor, jobdetails)
-    ## EXTRA CREDIT: Add your code to delete old entries
 
 # Setup portion of the program. Take arguments and set up the script
-# You should not need to edit anything here.
 def main():
     # Connect to SQL and get cursor
     conn = connect_to_sql()
     cursor = conn.cursor()
     create_tables(cursor, "table")
+
     # Load text file and store arguments into dictionary
     arg_dict = 0
     while (1):
         jobhunt(arg_dict, cursor)
         conn.commit()
         time.sleep(3600)
-        # Sleep for 1h
 
 
 if __name__ == '__main__':
