@@ -35,6 +35,16 @@ html_source_url = "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=EM
 tables = pandas.read_excel ('https://www.eia.gov/dnav/pet/hist_xls/EMD_EPD2D_PTE_R50_DPGw.xls', sheet_name='Data 1',
                             header = 2, index_col='Date')
 
+#code for graphing panda instert
+writer = pd.ExcelWriter('farm_data.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='Sheet1')
+
+workbook = writer.book
+worksheet = writer.sheets['Sheet1']
+
+chart = workbook.add_chart({'type': 'column'})
+
+
 # Connect to database
 # You may need to edit the connect function based on your local settings.
 def connect_to_sql():
