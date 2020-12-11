@@ -4,5 +4,7 @@ tables = pandas.read_excel ('https://www.eia.gov/dnav/pet/hist_xls/EMD_EPD2D_PTE
                             header = 2, index_col='Date')
 
 print(tables)
+print("'Value_Counts'")
+print("'gas price fluctuation'")
+print(df.Type.value_counts())
 
-ill add to this soon . i need help for sure
