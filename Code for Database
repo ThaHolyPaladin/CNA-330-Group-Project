@@ -1,44 +1,32 @@
 # CNA 330 Group Project fuel prices throughout the years. How the pandemic has affected gas prices#
 # Collaborated with Eric, Dillion, Igor, Vlado, Mohammad,
-# Help from Justin Ellis & Zac Rubin #
-# 12/9/2020 #
+# With Big Help from Justin Ellis & help from Zac Rubin #
+# 12/11/2020 #
 # This script pulls from the eia website and stores fuel prices into a database. It takes the information and compiles into a xcel sheet.
 # CNA 330 Group Project
 # https://www.geeksforgeeks.org/how-to-convert-pandas-dataframe-into-sql-in-python/
 
-from sqlalchemy import create_engine
-import pandas
-import mysql.connector
-import socket
+from sqlalchemy import create_engine # https://www.geeksforgeeks.org/how-to-convert-pandas-dataframe-into-sql-in-python/
+import pandas as pd
 
-socket.getaddrinfo('localhost', 3306)
-
-config = {
-  'user': 'root',
-  'password': 'root',
-  'host': '127.0.0.1',
-  'database': 'sql-group-project',
-  'raise_on_warnings': True,
-}
-
-link = mysql.connector.connect(**config)
-
-
-tables = pandas.read_excel ('https://www.eia.gov/dnav/pet/xls/PET_PRI_GND_DCUS_NUS_W.xls', sheet_name='Data 1',
-                            header = 2, index_col='Date')
-tables.rename(columns = {'Weekly West Coast (PADD 5) Except California No 2 Diesel Ultra Low Sulfur (0-15 ppm) Retail Prices  (Dollars per Gallon)'
-                         :'Diesel_Price'}, inplace=True)
-
+hostname="127.0.0.1"
+uname="root"
+pwd="root"
+dbname="sql-group-project"
 engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}"
-            .format(host="127.0.0.1", db="sql-group-project", user="root", pw="root"))
+            .format(host=hostname, db=dbname, user=uname, pw=pwd))
+
+tables = pd.read_excel ('https://www.eia.gov/dnav/pet/hist_xls/EMM_EPMRR_PTE_R5XCA_DPGw.xls', sheet_name='Data 1',
+                            header = 2, index_col='Date')
+
+tables.rename(columns = {'Weekly West Coast (PADD 5) Except California Regular Reformulated Retail Gasoline Prices  (Dollars per Gallon)'
+                         :'Price'}, inplace=True)
 
 connection=engine.connect()
 
-tables.to_sql('Fuel', con = engine, if_exists = 'append')
-
-engine.execute('CREATE TABLE Fuel_temp Like Fuel')
-engine.execute('INSERT INTO Fuel_temp SELECT DISTINCT (Date), Diesel_Price FROM Fuel ')
-engine.execute('DROP TABLE Fuel')
-engine.execute('ALTER TABLE Fuel_temp RENAME TO Fuel')
-
+tables.to_sql('fuel', con = engine, if_exists = 'append')
+engine.execute('CREATE TABLE fuel_temp Like fuel')
+engine.execute('INSERT INTO fuel_temp SELECT DISTINCT (Date), Price FROM fuel ')
+engine.execute('DROP TABLE fuel')
+engine.execute('ALTER TABLE fuel_temp RENAME TO fuel')
 connection.close()
