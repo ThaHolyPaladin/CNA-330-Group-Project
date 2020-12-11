@@ -8,14 +8,25 @@
 from sqlalchemy import create_engine # https://www.geeksforgeeks.org/how-to-convert-pandas-dataframe-into-sql-in-python/
 import pandas as pd
 from matplotlib import pyplot as plt
+import socket
+
+socket.getaddrinfo('localhost', 3306)
+
+config = {
+  'user': 'root',
+  'password': 'root',
+  'host': '127.0.0.1',
+  'database': 'sql-group-project',
+  'raise_on_warnings': True,
+}
 
 hostname="127.0.0.1"
 uname="root"
-pwd=""
+pwd="root"
 dbname="sql-group-project"
 
 engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}"
-            .format(host="127.0.0.1", db=sql-group-project, user=root, pw=""))
+            .format(host="127.0.0.1", db=sql-group-project, user=root, pw="root"))
 
 df = pd.read_sql_table('Fuel', engine)
 

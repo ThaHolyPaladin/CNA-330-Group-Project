@@ -17,7 +17,7 @@ config = {
   'user': 'root',
   'password': 'root',
   'host': '127.0.0.1',
-  'database': 'mysql',
+  'database': 'sql-group-project',
   'raise_on_warnings': True,
 }
 
@@ -30,7 +30,7 @@ tables.rename(columns = {'Weekly West Coast (PADD 5) Except California No 2 Dies
                          :'Diesel_Price'}, inplace=True)
 
 engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}"
-            .format(host="127.0.0.1", db="mysql", user="root", pw="root"))
+            .format(host="127.0.0.1", db="sql-group-project", user="root", pw="root"))
 
 connection=engine.connect()
 
