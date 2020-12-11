@@ -6,5 +6,8 @@
 
 ## https://www.bls.gov/opub/mlr/2020/article/from-the-barrel-to-the-pump.htm
 
-##https://stackoverflow.com/questions/7334199/getaddrinfo-failed-what-does-that-mean
-#helped with mamp server
+## https://stackoverflow.com/questions/7334199/getaddrinfo-failed-what-does-that-mean
+# helped with mamp server
+
+## https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-rename-transact-sql?redirectedfrom=MSDN&view=sql-server-ver15
+#using it to rename foreign keys
